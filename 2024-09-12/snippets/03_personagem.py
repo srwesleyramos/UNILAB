@@ -4,15 +4,15 @@
 
 player_display_1 = None
 player_health_1 = 100
-player_target_1 = None
+player_target_1 = 200
 
 player_display_2 = None
 player_health_2 = 100
-player_target_2 = None
+player_target_2 = 200
 
 player_display_3 = None
 player_health_3 = 100
-player_target_3 = None
+player_target_3 = 200
 
 _index = 0
 
