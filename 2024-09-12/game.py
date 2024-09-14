@@ -42,11 +42,11 @@ DIFFICULTY_SPEED_1 = 0.0
 
 DIFFICULTY_DISPLAY_2 = "Médio"
 DIFFICULTY_DAMAGE_2 = 25
-DIFFICULTY_SPEED_2 = 1.5
+DIFFICULTY_SPEED_2 = 5/2
 
 DIFFICULTY_DISPLAY_3 = "Díficil"
 DIFFICULTY_DAMAGE_3 = 30
-DIFFICULTY_SPEED_3 = 2.0
+DIFFICULTY_SPEED_3 = 5/4
 
 ##
 ## Decoração
@@ -107,30 +107,56 @@ print("""
 ## Variaveis de ambiente (DEV)
 ##
 
-difficulty_display = ''
-difficulty_damage = ''
-difficulty_speed = ''
+difficulty_display = 'Médio'
+difficulty_damage = 25
+difficulty_speed = 5/2
 
-players_count = None
+players_count = 3
 
-player_display_1 = None
+player_display_1 = 'Wesley'
 player_health_1 = 100
-player_target_1 = None
+player_target_1 = 200
 
-player_display_2 = None
+player_display_2 = "Joe"
 player_health_2 = 100
-player_target_2 = None
+player_target_2 = 200
 
-player_display_3 = None
+player_display_3 = 'Joao'
 player_health_3 = 100
-player_target_3 = None
+player_target_3 = 200
 
 ##
 ## Iniciando a partida
 ##
 
-current_player = 1
-# target_health = random.randint(100)
+game_player = 1
+game_running = True
+
+trail_head_x = 0
+trail_head_y = 0
+
+trail_tail_x = 0
+trail_tail_y = 0
+
+target_x = 55
+target_y = 0
+
+##
+## Variaveis de lógica
+##
+
+weapon_display = ''
+weapon_precision = 0
+weapon_damage = 0
+
+final_trail_x = 0
+final_trail_y = 0
+
+final_target_x = 0
+final_target_y = 0
+
+next_trail_update = 0
+next_target_update = 0
 
 while (True):
     time.sleep(2)
