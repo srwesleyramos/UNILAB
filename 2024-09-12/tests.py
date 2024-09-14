@@ -134,6 +134,21 @@ while (True):
         _index -= 1
 
     ##
+    ## Centralizando a dificuldade
+    ##
+
+    # difficulty_display = "Fácil"
+    difficulty_display = "Médio"
+    # difficulty_display = "Difícil"
+
+    botton = ""
+
+    while (len(botton) < (73 - len(difficulty_display)) / 2):
+        botton += " "
+    
+    botton += difficulty_display
+
+    ##
     ## Atualizando o rastro
     ##
 
@@ -145,9 +160,8 @@ while (True):
     print("         /     |   |_|   \\__,_|_|   \\__|_|\\__,_|\\__,_|   |     \\")
     print("        /      |_________________________________________|      \\")
     print("       /__________)                                   (__________\\")
-    print("       /__________)               Fácil                (__________\\")
-    print()
-    print("       Wesley [============   ] 233 --- 078 [=========      ] Alvo")
+    print(botton)
+    print("       Wesley [============  ] 233 --- 078 [=========     ]   Alvo")
     print("                                                                       ")
     print("                                                                       ")
     print("                                                                       ")
