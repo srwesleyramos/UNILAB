@@ -163,10 +163,10 @@ while (game_running):
     round_trail_path = True
 
     round_trail_head_x = 7
-    round_trail_head_y = 6
+    round_trail_head_y = 5
 
     round_trail_tail_x = 6
-    round_trail_tail_y = 6
+    round_trail_tail_y = 5
 
     ### OTHERS
 
@@ -204,7 +204,7 @@ while (game_running):
 
     if (round_win):
         round_final_trail_x = round_target_x
-        round_final_trail_y = round_target_y
+        round_final_trail_y = round_target_y + 3
     else:
         round_final_trail_x = random.randint(40, 54)
         round_final_trail_y = 0
@@ -217,6 +217,8 @@ while (game_running):
     next_target_update = 0
 
     while (round_running):
+        time.sleep(0.1)
+
         ### Updating target
 
         if (next_target_update <= round_time):
@@ -231,3 +233,31 @@ while (game_running):
                 round_target_path = True
 
             next_target_update = round_time + (round_target_speed * 1000)
+
+        ### Updating trail
+
+        if (next_trail_update <= round_time):
+            round_trail_tail_x = round_trail_head_x
+            round_trail_tail_y = round_trail_head_y
+
+            if (round_trail_head_x != round_final_trail_x):
+                round_trail_head_x += 1
+
+            if (round_trail_head_y != round_final_trail_y):
+                if (round_trail_path):
+                    if (random.randint(0, 3) == 1):
+                            round_trail_head_y += 1
+
+                    if (round_trail_head_y == 8):
+                        round_trail_path = False
+                elif ((round_final_trail_x - round_trail_head_x) > round_trail_head_y):
+                    if (random.randint(0, 3) == 1):
+                            round_trail_head_y -= 1
+                else:
+                    round_trail_head_y -= 1
+
+            next_trail_update = round_time + (round_trail_speed * 1000)
+
+        round_running = round_trail_head_x != round_final_trail_x or round_trail_head_y != round_final_trail_y
+        round_time += 100
+    break

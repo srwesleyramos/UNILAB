@@ -27,7 +27,7 @@ target_line_6 = "     "
 target_line_7 = "     "
 target_line_8 = "     "
 
-def draw(round_target_x, round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y, difficulty_display):
+def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y, difficulty_display):
     global ASCII_TARGET_LINE_1, ASCII_TARGET_LINE_2, ASCII_TARGET_LINE_3, ASCII_TARGET_LINE_4
     global target_line_1, target_line_2, target_line_3, target_line_4, target_line_5, target_line_6, target_line_7, target_line_8
     global line_1, line_2, line_3, line_4, line_5, line_6, line_7, line_8, line_9
