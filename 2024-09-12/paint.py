@@ -84,7 +84,7 @@ def draw(round_target_x, round_target_y, round_trail_head_x, round_trail_head_y,
 
     _index = 0
 
-    while (_index != 8):
+    while (_index != 9):
         x = 0
         y = _index
 

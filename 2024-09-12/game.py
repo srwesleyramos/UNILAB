@@ -170,6 +170,7 @@ while (game_running):
 
     ### OTHERS
 
+    round_running = True
     round_time = 0
     round_win = (round_weapon_precision / 100) < random.random()
 
@@ -184,7 +185,7 @@ while (game_running):
 
     _time = 0
     _time_final = (round_weapon_speed * 1000) * 48
-    _path = 1
+    _path = 0
 
     while (_time <= _time_final):
         if (_path):
@@ -202,8 +203,31 @@ while (game_running):
     ### Calculando a posição final da munição
 
     if (round_win):
-        round_final_trail_x = round_trail_head_x
-        round_final_trail_y = round_trail_head_y
+        round_final_trail_x = round_target_x
+        round_final_trail_y = round_target_y
     else:
-        round_final_trail_x = random.randint(30, 54)
+        round_final_trail_x = random.randint(40, 54)
         round_final_trail_y = 0
+    
+    ##
+    ## Let's play
+    ##
+
+    next_trail_update = 0
+    next_target_update = 0
+
+    while (round_running):
+        ### Updating target
+
+        if (next_target_update <= round_time):
+            if (round_target_path):
+                round_target_y += 1
+            else:
+                round_target_y -= 1
+
+            if (round_target_y == 5):
+                round_target_path = False
+            elif (round_target_y == 0):
+                round_target_path = True
+
+            next_target_update = round_time + (round_target_speed * 1000)
