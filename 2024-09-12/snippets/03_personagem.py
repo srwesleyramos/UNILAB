@@ -16,7 +16,7 @@ player_target_3 = 200
 
 _index = 0
 
-while (_index != players_count):
+while (_index != game_players):
     time.sleep(2)
     os.system("cls")
 

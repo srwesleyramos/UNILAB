@@ -2,7 +2,7 @@
 ## Configuração dos players
 ##
 
-players_count = None
+game_players = None
 
 while (True):
     time.sleep(2)
@@ -26,7 +26,7 @@ while (True):
     _count = input("  >> ")
 
     if (_count == '1' or _count == '2' or _count == '3'):
-        players_count = int(_count)
+        game_players = int(_count)
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
