@@ -93,17 +93,16 @@ ASCII_TRAIL_LINE_2 = "#"
 # APLICAÇÃO
 #
 
-print("""
-     _____ _                                 _            
-    |_   _(_)_ __ ___     __ _  ___     __ _| |_   _____  
-      | | | | '__/ _ \\   / _` |/ _ \\   / _` | \\ \\ / / _ \\ 
-      | | | | | | (_) | | (_| | (_) | | (_| | |\\ V / (_) |
-      |_| |_|_|  \\___/   \\__,_|\\___/   \\__,_|_| \\_/ \\___/ 
-
-                        by @srwesleyramos
-
-          Bem-vindo(a) ao nosso jogo de tiro ao alvo!
-""")
+print("     _____ _                                 _")
+print("    |_   _(_)_ __ ___     __ _  ___     __ _| |_   _____")
+print("      | | | | '__/ _ \\   / _` |/ _ \\   / _` | \\ \\ / / _ \\")
+print("      | | | | | | (_) | | (_| | (_) | | (_| | |\\ V / (_) |")
+print("      |_| |_|_|  \\___/   \\__,_|\\___/   \\__,_|_| \\_/ \\___/")
+print()
+print("                        by @srwesleyramos")
+print()
+print("          Bem-vindo(a) ao nosso jogo de tiro ao alvo!")
+print()
 
 ##
 ## Variaveis de ambiente (DEV)
@@ -113,7 +112,7 @@ difficulty_display = 'Médio'
 difficulty_damage = 25
 difficulty_speed = 0.33
 
-players_count = 3
+game_players = 3
 
 player_display_1 = 'Wesley'
 player_health_1 = 100
@@ -135,112 +134,40 @@ game_player = 1
 game_running = True
 
 while (game_running):
-  ##
-  ## Propriedades do round
-  ##
+    ##
+    ## Propriedades do round
+    ##
 
-  trail_head_x = 7
-  trail_head_y = 6
-  trail_head_d = True
+    ### WEAPON
 
-  trail_tail_x = 6
-  trail_tail_y = 6
+    round_weapon_display = 'Arco e flecha'
+    round_weapon_precision = 80
+    round_weapon_damage = 20
+    round_weapon_speed = 0.35
 
-  target_x = 55
-  target_y = 1
-  target_s = random.uniform(
-    difficulty_speed - (difficulty_speed * 0.3), difficulty_speed + (difficulty_speed * 0.3)
-  )
-  target_d = False
+    ### TARGET
 
-  weapon_display = 'Arco e flecha'
-  weapon_precision = 80
-  weapon_damage = 20
+    round_target_speed = random.uniform(
+        difficulty_speed - (difficulty_speed * 0.3), difficulty_speed + (difficulty_speed * 0.3)
+    )
+    round_target_path = False
 
-  ##
-  ## Calculando TARGET
-  ##
+    round_target_x = 55
+    round_target_y = 1
 
-  final_target_x = target_x
-  final_target_y = target_y
+    ### TRAIL
 
-  _time = 0
-  _state = 0
+    round_trail_speed = random.uniform(
+        round_weapon_speed - (round_weapon_speed * 0.3), round_weapon_speed + (round_weapon_speed * 0.3)
+    )
+    round_trail_path = True
 
-  while (_time <= 5000):
-    if (_state):
-      final_target_y += 1
-    else:
-      final_target_y -= 1
+    round_trail_head_x = 7
+    round_trail_head_y = 6
 
-    if (final_target_y == 5):
-      _state = 0
-    elif (final_target_y == 0):
-      _state = 1
-    
-    _time += (target_s * 1000)
+    round_trail_tail_x = 6
+    round_trail_tail_y = 6
 
-  ##
-  ## Calculando TRAIL
-  ##
+    ### WIN
 
-  if ((weapon_precision / 10) > random.randrange(1, 10)):
-    final_trail_x = final_target_x
-    final_trail_y = final_target_y + 2
-  else:
-    final_trail_x = 73
-
-    while (True):
-      final_trail_y = random.randrange(0, 8)
-
-      if (final_trail_y >= (final_target_y + 1) and final_trail_y <= (final_target_y + 3)):
-        continue
-      else:
-        break
-
-  ##
-  ## Let's play baby!
-  ##
-
-  game_time = 0
-
-  next_trail_update = 0
-  next_target_update = 0
-
-  while (game_time <= 5000):
-    if (next_target_update <= game_time):
-        if (target_d):
-            target_y += 1
-        else:
-            target_y -= 1
-
-        if (target_y == 5):
-            target_d = False
-        elif (target_y == 0):
-            target_d = True
-        
-        next_target_update = game_time + (target_s * 1000)
-    
-    if (next_trail_update <= game_time):
-      trail_tail_x = trail_head_x
-      trail_tail_y = trail_head_y
-
-      trail_head_x += 1
-
-      if (trail_head_d):
-        if (trail_head_y < 7):
-          if (random.randint(0, 6) == 1):
-            trail_head_y += 1
-        else:
-          trail_head_d = False
-          if (random.randint(0, 6) == 1):
-            trail_head_y -= 1
-      else:
-        if (random.randint(0, 6) == 1):
-          trail_head_y -= 1
-
-        draw(round_target_x, round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y, difficulty_display)
-
-    game_time += (5 / 55) * 1000
-    time.sleep((5 / 55))
-  break
+    round_win = (round_weapon_precision / 100) < random.random()
