@@ -198,3 +198,12 @@ while (game_running):
             _path = 1
 
         _time += (round_target_speed * 1000)
+    
+    ### Calculando a posição final da munição
+
+    if (round_win):
+        round_final_trail_x = round_trail_head_x
+        round_final_trail_y = round_trail_head_y
+    else:
+        round_final_trail_x = random.randint(30, 54)
+        round_final_trail_y = 0
