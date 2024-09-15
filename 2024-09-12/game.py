@@ -168,6 +168,33 @@ while (game_running):
     round_trail_tail_x = 6
     round_trail_tail_y = 6
 
-    ### WIN
+    ### OTHERS
 
+    round_time = 0
     round_win = (round_weapon_precision / 100) < random.random()
+
+    ##
+    ## Cálculos
+    ##
+
+    ### Calculando a posição final do alvo
+
+    round_final_target_x = round_target_x
+    round_final_target_y = round_target_y
+
+    _time = 0
+    _time_final = (round_weapon_speed * 1000) * 48
+    _path = 1
+
+    while (_time <= _time_final):
+        if (_path):
+            round_final_target_y += 1
+        else:
+            round_final_target_y -= 1
+
+        if (round_final_target_y == 5):
+            _path = 0
+        elif (round_final_target_y == 0):
+            _path = 1
+
+        _time += (round_target_speed * 1000)
