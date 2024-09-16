@@ -1,93 +1,17 @@
 #
-#             _____ _                                 _            
-#            |_   _(_)_ __ ___     __ _  ___     __ _| |_   _____  
-#              | | | | '__/ _ \   / _` |/ _ \   / _` | \ \ / / _ \ 
+#             _____ _                                 _
+#            |_   _(_)_ __ ___     __ _  ___     __ _| |_   _____
+#              | | | | '__/ _ \   / _` |/ _ \   / _` | \ \ / / _ \
 #              | | | | | | (_) | | (_| | (_) | | (_| | |\ V / (_) |
-#              |_| |_|_|  \___/   \__,_|\___/   \__,_|_| \_/ \___/ 
-#           
+#              |_| |_|_|  \___/   \__,_|\___/   \__,_|_| \_/ \___/
+#
 #                              by @srwesleyramos
 #
 
-import os
 import random
 import time
 
-from paint import draw
-
-# 
-# CONFIGURAÇÕES
-#
-
-##
-## Armamento
-##
-
-WEAPON_DISPLAY_1 = "Arco e Flecha"
-WEAPON_PRECISION_1 = 80
-WEAPON_DAMAGE_1 = 20
-
-WEAPON_DISPLAY_2 = "Pistola"
-WEAPON_PRECISION_2 = 40
-WEAPON_DAMAGE_2 = 60
-
-WEAPON_DISPLAY_3 = "Bazuka"
-WEAPON_PRECISION_3 = 10
-WEAPON_DAMAGE_3 = 80
-
-##
-## Dificuldade
-##
-
-DIFFICULTY_DISPLAY_1 = "Fácil"
-DIFFICULTY_DAMAGE_1 = 20
-DIFFICULTY_SPEED_1 = 0.0
-
-DIFFICULTY_DISPLAY_2 = "Médio"
-DIFFICULTY_DAMAGE_2 = 25
-DIFFICULTY_SPEED_2 = 5 / 2
-
-DIFFICULTY_DISPLAY_3 = "Díficil"
-DIFFICULTY_DAMAGE_3 = 30
-DIFFICULTY_SPEED_3 = 5 / 4
-
-##
-## Decoração
-##
-
-ASCII_NUMBER_1_LINE_1 = "___"
-ASCII_NUMBER_1_LINE_2 = " _ "
-ASCII_NUMBER_1_LINE_3 = "/ |"
-ASCII_NUMBER_1_LINE_4 = "| |"
-ASCII_NUMBER_1_LINE_5 = "| |"
-ASCII_NUMBER_1_LINE_6 = "|_|"
-ASCII_NUMBER_1_LINE_7 = "___"
-ASCII_NUMBER_1_LINE_8 = "   "
-
-ASCII_NUMBER_2_LINE_1 = "_______"
-ASCII_NUMBER_2_LINE_2 = " ____  "
-ASCII_NUMBER_2_LINE_3 = "|___ \\ "
-ASCII_NUMBER_2_LINE_4 = "  __) |"
-ASCII_NUMBER_2_LINE_5 = " / __/ "
-ASCII_NUMBER_2_LINE_6 = "|_____|"
-ASCII_NUMBER_2_LINE_7 = "_______"
-ASCII_NUMBER_2_LINE_8 = "       "
-
-ASCII_NUMBER_3_LINE_1 = "_______"
-ASCII_NUMBER_3_LINE_2 = " _____ "
-ASCII_NUMBER_3_LINE_3 = "|___ / "
-ASCII_NUMBER_3_LINE_4 = "  |_ \\ "
-ASCII_NUMBER_3_LINE_5 = " ___) |"
-ASCII_NUMBER_3_LINE_6 = "|____/ "
-ASCII_NUMBER_3_LINE_7 = "_______"
-ASCII_NUMBER_3_LINE_8 = "       "
-
-ASCII_TARGET_LINE_1 = " .-. "
-ASCII_TARGET_LINE_2 = ". o ."
-ASCII_TARGET_LINE_3 = " ._. "
-ASCII_TARGET_LINE_4 = "  |  "
-
-ASCII_TRAIL_LINE_1 = "@"
-ASCII_TRAIL_LINE_2 = "#"
+import paint
 
 #
 # APLICAÇÃO
@@ -104,13 +28,13 @@ print()
 print("          Bem-vindo(a) ao nosso jogo de tiro ao alvo!")
 print()
 
-##
-## Variaveis de ambiente (DEV)
-##
+#
+# Variaveis de ambiente (DEV)
+#
 
 difficulty_display = 'Médio'
 difficulty_damage = 25
-difficulty_speed = 0.33
+difficulty_speed = 0.5
 
 game_players = 3
 
@@ -126,26 +50,45 @@ player_display_3 = 'Joao'
 player_health_3 = 100
 player_target_3 = 200
 
-##
-## Iniciando a partida
-##
+#
+# PARTIDA
+#
 
-game_player = 1
+game_player = game_players
 game_running = True
+game_winner = -1
 
-while (game_running):
-    ##
-    ## Propriedades do round
-    ##
+while game_winner == -1:
+    _game_player = 1
+    _game_dead = 0
 
-    ### WEAPON
+    while _game_player <= game_players:
+        if globals()[f'player_health_{game_player}'] == 0:
+            _game_dead += 1
+
+    if _game_dead == game_players:
+        break
+
+    if globals()[f'player_health_{game_player}'] != 0:
+        if game_player == game_players:
+            game_player = 1
+        else:
+            game_player += 1
+    else:
+        continue
+
+    #
+    # PROPRIEDADES - WEAPON
+    #
 
     round_weapon_display = 'Arco e flecha'
     round_weapon_precision = 80
     round_weapon_damage = 20
     round_weapon_speed = 0.35
 
-    ### TARGET
+    #
+    # PROPRIEDADES - TARGET
+    #
 
     round_target_speed = random.uniform(
         difficulty_speed - (difficulty_speed * 0.3), difficulty_speed + (difficulty_speed * 0.3)
@@ -155,7 +98,9 @@ while (game_running):
     round_target_x = 55
     round_target_y = 1
 
-    ### TRAIL
+    #
+    # PROPRIEDADES - TRAIL
+    #
 
     round_trail_speed = random.uniform(
         round_weapon_speed - (round_weapon_speed * 0.3), round_weapon_speed + (round_weapon_speed * 0.3)
@@ -168,96 +113,119 @@ while (game_running):
     round_trail_tail_x = 6
     round_trail_tail_y = 5
 
-    ### OTHERS
+    #
+    # PROPRIEDADES - OTHERS
+    #
 
     round_running = True
     round_time = 0
-    round_win = (round_weapon_precision / 100) < random.random()
+    round_won = (round_weapon_precision / 100) < random.random()
 
-    ##
-    ## Cálculos
-    ##
+    #
+    # TARGET
+    #
 
-    ### Calculando a posição final do alvo
+    round_target_x_final = round_target_x
+    round_target_y_final = round_target_y
 
-    round_final_target_x = round_target_x
-    round_final_target_y = round_target_y
+    _round_time = 0
+    _round_final = (round_weapon_speed * 1000) * 48
+    _round_path = 0
 
-    _time = 0
-    _time_final = (round_weapon_speed * 1000) * 48
-    _path = 0
-
-    while (_time <= _time_final):
-        if (_path):
-            round_final_target_y += 1
+    while _round_time <= _round_final:
+        if _round_path:
+            round_target_y_final += 1
         else:
-            round_final_target_y -= 1
+            round_target_y_final -= 1
 
-        if (round_final_target_y == 5):
-            _path = 0
-        elif (round_final_target_y == 0):
-            _path = 1
+        if round_target_y_final == 5:
+            _round_path = 0
+        elif round_target_y_final == 0:
+            _round_path = 1
 
-        _time += (round_target_speed * 1000)
-    
-    ### Calculando a posição final da munição
+        _round_time += (round_target_speed * 1000)
 
-    if (round_win):
-        round_final_trail_x = round_target_x
-        round_final_trail_y = round_target_y + 3
+    #
+    # TRAIL
+    #
+
+    if round_won:
+        round_trail_x_final = round_target_x
+        round_trail_y_final = round_target_y + 3
     else:
-        round_final_trail_x = random.randint(40, 54)
-        round_final_trail_y = 0
-    
-    ##
-    ## Let's play
-    ##
+        round_trail_x_final = random.randint(40, 54)
+        round_trail_y_final = 0
+
+    #
+    # Let's play
+    #
 
     next_trail_update = 0
     next_target_update = 0
 
-    while (round_running):
-        time.sleep(0.1)
+    while round_running:
+        screen_updated = next_target_update <= round_time or next_trail_update <= round_time
 
-        ### Updating target
+        # Updating target
 
-        if (next_target_update <= round_time):
-            if (round_target_path):
+        if next_target_update <= round_time:
+            if round_target_path:
                 round_target_y += 1
             else:
                 round_target_y -= 1
 
-            if (round_target_y == 5):
+            if round_target_y == 5:
                 round_target_path = False
-            elif (round_target_y == 0):
+            elif round_target_y == 0:
                 round_target_path = True
 
             next_target_update = round_time + (round_target_speed * 1000)
 
-        ### Updating trail
+        # Updating trail
 
-        if (next_trail_update <= round_time):
+        if next_trail_update <= round_time:
             round_trail_tail_x = round_trail_head_x
             round_trail_tail_y = round_trail_head_y
 
-            if (round_trail_head_x != round_final_trail_x):
+            if round_trail_head_x != round_trail_x_final:
                 round_trail_head_x += 1
 
-            if (round_trail_head_y != round_final_trail_y):
-                if (round_trail_path):
-                    if (random.randint(0, 3) == 1):
-                            round_trail_head_y += 1
+            if round_trail_head_y != round_trail_y_final:
+                if round_trail_path:
+                    if random.randint(0, 3) == 1:
+                        round_trail_head_y += 1
 
-                    if (round_trail_head_y == 8):
+                    if round_trail_head_y == 8:
                         round_trail_path = False
-                elif ((round_final_trail_x - round_trail_head_x) > round_trail_head_y):
-                    if (random.randint(0, 3) == 1):
-                            round_trail_head_y -= 1
+                elif (round_trail_x_final - round_trail_head_x) > round_trail_head_y:
+                    if random.randint(0, 3) == 1:
+                        round_trail_head_y -= 1
                 else:
                     round_trail_head_y -= 1
 
             next_trail_update = round_time + (round_trail_speed * 1000)
 
-        round_running = round_trail_head_x != round_final_trail_x or round_trail_head_y != round_final_trail_y
-        round_time += 100
-    break
+        # Drawing
+
+        if screen_updated:
+            paint.draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y,
+                       difficulty_display)
+
+        round_running = round_trail_head_x != round_trail_x_final or round_trail_head_y != round_trail_y_final
+        round_time += 5000
+
+        # Elapsed time
+
+        time.sleep(0.05)
+
+    # Winner
+
+    if round_won:
+        globals()[f'player_target_{game_player}'] = max(
+            globals()[f'player_target_{game_player}'] - round_weapon_damage, 0)
+    else:
+        globals()[f'player_health_{game_player}'] = max(
+            globals()[f'player_health_{game_player}'] - difficulty_damage, 0)
+
+    if globals()[f'player_target_{game_player}'] == 0:
+        game_winner = game_player
