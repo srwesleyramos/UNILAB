@@ -36,7 +36,7 @@ difficulty_display = 'Médio'
 difficulty_damage = 25
 difficulty_speed = 0.5
 
-game_players = 3
+game_players = 1
 
 player_display_1 = 'Wesley'
 player_health_1 = 100
@@ -65,6 +65,7 @@ while game_winner == -1:
     while _game_player <= game_players:
         if globals()[f'player_health_{game_player}'] == 0:
             _game_dead += 1
+        _game_player += 1
 
     if _game_dead == game_players:
         break
@@ -209,7 +210,7 @@ while game_winner == -1:
 
         if screen_updated:
             paint.draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y,
-                       difficulty_display)
+                       difficulty_display, globals()[f'player_health_{game_player}'], globals()[f'player_target_{game_player}'])
 
         round_running = round_trail_head_x != round_trail_x_final or round_trail_head_y != round_trail_y_final
         round_time += 5000

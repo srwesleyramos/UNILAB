@@ -37,7 +37,7 @@ while (_index != game_players):
 
     _name = input("  >> ")
 
-    if (len(_name)> 2 and len(_name) < 7):
+    if (len(_name) > 2 and len(_name) < 7):
         globals()[f"player_display_{_index}"] = _name
     else:
         print("\n  O nome fornecido não respeita as regras estabelecidas.")

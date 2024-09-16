@@ -27,7 +27,9 @@ target_line_6 = "     "
 target_line_7 = "     "
 target_line_8 = "     "
 
-def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y, difficulty_display):
+
+def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y,
+         difficulty_display, player_health, player_target):
     global ASCII_TARGET_LINE_1, ASCII_TARGET_LINE_2, ASCII_TARGET_LINE_3, ASCII_TARGET_LINE_4
     global target_line_1, target_line_2, target_line_3, target_line_4, target_line_5, target_line_6, target_line_7, target_line_8
     global line_1, line_2, line_3, line_4, line_5, line_6, line_7, line_8, line_9
@@ -105,8 +107,62 @@ def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tai
         _index += 1
 
     ##
+    ## Calculando player health's bar
+    ##
+
+    player_health_bar = ''
+    player_health_tmp = player_health * 14 / 100
+
+    #   14 = 100
+    #   50 = y
+
+    _player_health_index = 0
+
+    while _player_health_index < 14:
+        if _player_health_index < player_health_tmp:
+            player_health_bar += '='
+        else:
+            player_health_bar += ' '
+
+        _player_health_index += 1
+
+    ##
+    ## Calculando player health's bar
+    ##
+
+    player_target_bar = ''
+    player_target_tmp = player_target * 14 / 100
+
+    #   14 = 100
+    #   50 = y
+
+    _player_target_index = 0
+
+    while _player_target_index < 14:
+        if _player_target_index < player_target_tmp:
+            player_target_bar += '='
+        else:
+            player_target_bar += ' '
+
+        _player_target_index += 1
+
+    ##
     ## Enviando na tela
     ##
+
+    str_1 = ''
+    str_1_i = 0
+
+    while str_1_i < (3 - len(str(player_health))):
+        str_1 += ' '
+        str_1_i += 1
+
+    str_2 = ''
+    str_2_i = 0
+
+    while str_2_i < (3 - len(str(player_target))):
+        str_2 += ' '
+        str_2_i += 1
 
     print("                __________________________________________")
     print("       ________|    ____            _   _     _          |________")
@@ -117,7 +173,8 @@ def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tai
     print("        /      |_________________________________________|      \\")
     print("       /__________)                                   (__________\\")
     print(difficulty_centered)
-    print("       Wesley [============  ] 233 --- 078 [=========     ]   Alvo")
+    print(
+        f"       Wesley [{player_health_bar}] {str_1}{player_health} --- {player_target}{str_2} [{player_target_bar}]   Alvo")
     print("                                                                       ")
     print("                                                                       ")
     print("                                                                       ")

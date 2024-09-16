@@ -22,7 +22,7 @@ while (True):
     print("    Escolha a dificuldade que você deseja para o jogo. Certifique-se de usar ")
     print("  o valor correspondente a desejada.")
     print()
-    
+
     _index = 1
 
     while (f"DIFFICULTY_DISPLAY_{_index}") in globals():
@@ -31,7 +31,7 @@ while (True):
         print(f"      - Força: {globals()[f"DIFFICULTY_DAMAGE_{_index}"]}")
         print(f"      - Esquivo: {globals()[f"DIFFICULTY_SPEED_{_index}"]}")
         print()
-        
+
         _index += 1
 
     _difficulty = input("  >> ")
