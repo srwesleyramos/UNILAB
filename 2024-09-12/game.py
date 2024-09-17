@@ -55,27 +55,24 @@ player_target_3 = 200
 #
 
 game_player = game_players
-game_running = True
 game_winner = -1
+game_deaths = 0
 
-while game_winner == -1:
-    _game_player = 1
-    _game_dead = 0
+while game_deaths != game_players and game_winner == -1:
+    #
+    # Trocando jogador
+    #
 
-    while _game_player <= game_players:
-        if globals()[f'player_health_{game_player}'] == 0:
-            _game_dead += 1
-        _game_player += 1
-
-    if _game_dead == game_players:
-        break
-
-    if globals()[f'player_health_{game_player}'] != 0:
-        if game_player == game_players:
-            game_player = 1
-        else:
-            game_player += 1
+    if game_player == game_players:
+        game_player = 1
     else:
+        game_player += 1
+
+    #
+    # Verificando jogador
+    #
+
+    if globals()[f'player_health_{game_player}'] == 0:
         continue
 
     #
@@ -210,10 +207,11 @@ while game_winner == -1:
 
         if screen_updated:
             paint.draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tail_x, round_trail_tail_y,
-                       difficulty_display, globals()[f'player_health_{game_player}'], globals()[f'player_target_{game_player}'])
+                       difficulty_display, globals()[f'player_health_{game_player}'],
+                       globals()[f'player_target_{game_player}'])
 
         round_running = round_trail_head_x != round_trail_x_final or round_trail_head_y != round_trail_y_final
-        round_time += 5000
+        round_time += 50
 
         # Elapsed time
 
@@ -230,3 +228,6 @@ while game_winner == -1:
 
     if globals()[f'player_target_{game_player}'] == 0:
         game_winner = game_player
+
+    if globals()[f'player_health_{game_player}'] == 0:
+        game_deaths += 1

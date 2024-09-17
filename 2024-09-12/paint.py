@@ -127,11 +127,11 @@ def draw(round_target_y, round_trail_head_x, round_trail_head_y, round_trail_tai
         _player_health_index += 1
 
     ##
-    ## Calculando player health's bar
+    ## Calculando player target's bar
     ##
 
     player_target_bar = ''
-    player_target_tmp = player_target * 14 / 100
+    player_target_tmp = player_target * 14 / 200
 
     #   14 = 100
     #   50 = y
