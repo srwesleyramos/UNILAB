@@ -88,27 +88,135 @@ print()
 print("          Bem-vindo(a) ao nosso jogo de tiro ao alvo!")
 print()
 
-#
-# Variaveis de ambiente (DEV)
-#
+time.sleep(3)
 
-difficulty_display = 'Médio'
-difficulty_damage = 25
-difficulty_speed = 0.5
+# Escolhendo a dificuldade
 
-game_players = 1
+difficulty_damage = None
+difficulty_display = None
+difficulty_speed = None
 
-player_display_1 = 'Wesley'
+while True:
+    os.system("cls")
+
+    print("           __________________________________________________________ ")
+    print("  ________|    ____  _  __ _            _     _           _         |________")
+    print("  \\       |   |  _ \\(_)/ _(_) ___ _   _| | __| | __ _  __| | ___    |       /")
+    print("   \\      |   | | | | | |_| |/ __| | | | |/ _` |/ _` |/ _` |/ _ \\   |      /")
+    print("    \\     |   | |_| | |  _| | (__| |_| | | (_| | (_| | (_| |  __/   |     /")
+    print("    /     |   |____/|_|_| |_|\\___|\\__,_|_|\\__,_|\\__,_|\\__,_|\\___|   |     \\")
+    print("   /      |_________________________________________________________|      \\")
+    print("  /__________)                                                   (__________\\")
+    print()
+    print("    Escolha a dificuldade que você deseja para o jogo. Certifique-se de usar ")
+    print("  o valor correspondente a desejada.")
+    print()
+
+    _index = 1
+
+    while f"DIFFICULTY_DISPLAY_{_index}" in globals():
+        print(f"    {_index}:")
+        print(f"      - Título: {globals()[f"DIFFICULTY_DISPLAY_{_index}"]}")
+        print(f"      - Força: {globals()[f"DIFFICULTY_DAMAGE_{_index}"]}")
+        print(f"      - Esquivo: {globals()[f"DIFFICULTY_SPEED_{_index}"]}")
+        print()
+
+        _index += 1
+
+    _difficulty = input("  >> ")
+
+    if f"DIFFICULTY_DISPLAY_{_difficulty}" in globals():
+        difficulty_damage = globals()[f"DIFFICULTY_DAMAGE_{_difficulty}"]
+        difficulty_display = globals()[f"DIFFICULTY_DISPLAY_{_difficulty}"]
+        difficulty_speed = globals()[f"DIFFICULTY_SPEED_{_difficulty}"]
+
+        print(f"\n  A dificuldade {difficulty_display} foi escolhida com sucesso!")
+
+        time.sleep(2)
+        break
+    else:
+        print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
+
+    time.sleep(2)
+
+# Escolhendo a quantidade de jogadores
+
+game_players = None
+
+while True:
+    os.system("cls")
+
+    print("           __________________________________________        ")
+    print("  ________|    ____  _                              |________")
+    print("  \\       |   |  _ \\| | __ _ _   _  ___ _ __ ___    |       /")
+    print("   \\      |   | |_) | |/ _` | | | |/ _ \\ '__/ __|   |      / ")
+    print("    \\     |   |  __/| | (_| | |_| |  __/ |  \\__ \\   |     /  ")
+    print("    /     |   |_|   |_|\\__,_|\\__, |\\___|_|  |___/   |     \\  ")
+    print("   /      |_________________ |___/ _________________|      \\ ")
+    print("  /__________)                                   (__________\\")
+    print()
+    print("    Selecione quantos jogadores irão participar. Certifique-se")
+    print("  de usar o valor válido.")
+    print()
+    print("    Opções: 1, 2 ou 3.")
+    print()
+
+    _count = input("  >> ")
+
+    if _count == '1' or _count == '2' or _count == '3':
+        game_players = int(_count)
+
+        time.sleep(2)
+
+        break
+    else:
+        print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
+
+    time.sleep(2)
+
+# Escolhendo os personagens
+
+player_display_1 = None
 player_health_1 = 100
 player_target_1 = 200
 
-player_display_2 = "Sid"
+player_display_2 = None
 player_health_2 = 100
 player_target_2 = 200
 
-player_display_3 = 'Joao'
+player_display_3 = None
 player_health_3 = 100
 player_target_3 = 200
+
+_index = 0
+
+while _index != game_players:
+    os.system("cls")
+
+    _index += 1
+
+    print(f"           ___________________________________{globals()[f"ASCII_NUMBER_{_index}_PART_1"]}____ ")
+    print(f"  ________|    ____  _                        {globals()[f"ASCII_NUMBER_{_index}_PART_2"]}   |________")
+    print(f"  \\       |   |  _ \\| | __ _ _   _  ___ _ __  {globals()[f"ASCII_NUMBER_{_index}_PART_3"]}   |       /")
+    print(f"   \\      |   | |_) | |/ _` | | | |/ _ \\ '__| {globals()[f"ASCII_NUMBER_{_index}_PART_4"]}   |      /")
+    print(f"    \\     |   |  __/| | (_| | |_| |  __/ |    {globals()[f"ASCII_NUMBER_{_index}_PART_5"]}   |     /")
+    print(f"    /     |   |_|   |_|\\__,_|\\__, |\\___|_|    {globals()[f"ASCII_NUMBER_{_index}_PART_6"]}   |     \\")
+    print(f"   /      |_________________ |___/ ___________{globals()[f"ASCII_NUMBER_{_index}_PART_7"]}___|      \\")
+    print(f"  /__________)                                {globals()[f"ASCII_NUMBER_{_index}_PART_8"]}(__________\\")
+    print()
+    print(f"    Você deve escolher o nome do seu personagem. Certifique-se")
+    print(f"  de ser maior que 3 e menor que 6 caracteres.")
+    print()
+
+    _name = input("  >> ")
+
+    if (len(_name) > 2) and (len(_name) < 7):
+        globals()[f"player_display_{_index}"] = _name
+    else:
+        print("\n  O nome fornecido não respeita as regras estabelecidas.")
+        _index -= 1
+
+    time.sleep(2)
 
 #
 # PARTIDA
@@ -387,12 +495,18 @@ while game_deaths != game_players and game_winner == -1:
         globals()[f'player_health_{game_player}'] = max(
             globals()[f'player_health_{game_player}'] - difficulty_damage, 0)
 
+    # TODO: adicionar animação ao receber dano ou dar dano;
+
     # Winner
 
     if globals()[f'player_target_{game_player}'] == 0:
         game_winner = game_player
 
+    # TODO: adicionar animação na vitória;
+
     # Loser
 
     if globals()[f'player_health_{game_player}'] == 0:
         game_deaths += 1
+
+    # TODO: adicionar animação na perda;
