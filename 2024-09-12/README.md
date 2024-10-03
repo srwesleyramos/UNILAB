@@ -1,6 +1,6 @@
 <div class="md-content" style="max-width: 700px">
 
-# TIRO AO ALVO
+# TARGET STRIKERS
 
 Neste jogo, dois jogadores competem entre si e enfrentam seus respectivos alvos. A cada rodada, os jogadores podem selecionar a arma que melhor se adequa à sua estratégia, levando em consideração fatores como poder de fogo, velocidade ou precisão.
 

@@ -1,5 +1,0 @@
-print("         ")
-print("   .-.   ")
-print("  . o .  ")
-print("   ._.   ")
-print("         ")

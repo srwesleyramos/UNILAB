@@ -38,6 +38,8 @@ DIFFICULTY_SPEED_3 = 0.3
 # ASCII TEXT
 #
 
+# Numbers
+
 ASCII_NUMBER_1_PART_1 = "___"
 ASCII_NUMBER_1_PART_2 = " _ "
 ASCII_NUMBER_1_PART_3 = "/ |"
@@ -65,6 +67,8 @@ ASCII_NUMBER_3_PART_6 = "|____/ "
 ASCII_NUMBER_3_PART_7 = "_______"
 ASCII_NUMBER_3_PART_8 = "       "
 
+# Objects
+
 ASCII_TARGET_PART_1 = " .-. "
 ASCII_TARGET_PART_2 = ". o ."
 ASCII_TARGET_PART_3 = " ._. "
@@ -77,15 +81,20 @@ ASCII_TRAIL_PART_2 = "#"
 # APLICAÇÃO
 #
 
-print("     _____ _                                 _")
-print("    |_   _(_)_ __ ___     __ _  ___     __ _| |_   _____")
-print("      | | | | '__/ _ \\   / _` |/ _ \\   / _` | \\ \\ / / _ \\")
-print("      | | | | | | (_) | | (_| | (_) | | (_| | |\\ V / (_) |")
-print("      |_| |_|_|  \\___/   \\__,_|\\___/   \\__,_|_| \\_/ \\___/")
+os.system('cls')
+
 print()
-print("                        by @srwesleyramos")
+print("         _____  _    ____   ____ _____ _____")
+print("        |_   _|/ \\  |  _ \\ / ___| ____|_   _|")
+print("          | | / _ \\ | |_) | |  _|  _|   | |")
+print("          | |/ ___ \\|  _ <| |_| | |___  | |")
+print("     ____ |_/_/ __\\_\\_|_\\_\\\\____|_____|_|_|____")
+print("    / ___|_   _|  _ \\|_ _| |/ / ____|  _ \\/ ___|")
+print("    \\___ \\ | | | |_) || || ' /|  _| | |_) \\___ \\")
+print("     ___) || | |  _ < | || . \\| |___|  _ < ___) |")
+print("    |____/ |_| |_| \\_\\___|_|\\_\\_____|_| \\_\\____/")
 print()
-print("          Bem-vindo(a) ao nosso jogo de tiro ao alvo!")
+print("                  by @srwesleyramos")
 print()
 
 time.sleep(3)
@@ -239,7 +248,9 @@ while game_deaths != game_players and game_winner == -1:
     if globals()[f'player_health_{game_player}'] == 0:
         continue
 
-    # TODO: Weapon's properties
+    # Weapon's properties
+
+    # TODO: adicionar seleção do armamento
 
     round_weapon_display = 'Arco e flecha'
     round_weapon_precision = 80
