@@ -6,6 +6,8 @@ import time
 # CONFIGURAÇÕES
 #
 
+# TODO: balancear as armas e dificuldades
+
 # Armas
 
 WEAPON_DISPLAY_1 = "Arco e Flecha"
@@ -33,6 +35,10 @@ DIFFICULTY_SPEED_2 = 0.5
 DIFFICULTY_DISPLAY_3 = "Díficil"
 DIFFICULTY_DAMAGE_3 = 30
 DIFFICULTY_SPEED_3 = 0.3
+
+# Equipamento
+
+# TODO: criar configuração dos equipamentos
 
 #
 # ASCII TEXT
@@ -221,6 +227,8 @@ while _index != game_players:
 
     if (len(_name) > 2) and (len(_name) < 7):
         globals()[f"player_display_{_index}"] = _name
+
+        # TODO: adicionar seleção de equipamento
     else:
         print("\n  O nome fornecido não respeita as regras estabelecidas.")
         _index -= 1
@@ -453,11 +461,14 @@ while game_deaths != game_players and game_winner == -1:
             if len(str(_target_health_num)) != 3:
                 _target_health_num = str(_target_health_num) + "   "[:(3 - len(str(_target_health_num)))]
 
-            # Drawing
+            # Round time
 
-            _difficulty = "                                                                       "[
-                          :int(73 / 2 - len(difficulty_display) / 2)]
-            _difficulty += difficulty_display
+            _time_min = int(round_time / 60000)
+            _time_sec = int((round_time - _time_min * 60000) / 1000)
+            _time = "                                                                       "[:int(73 / 2 - 2.5)]
+            _time += f"{_time_min:02d}:{_time_sec:02d}"
+
+            # Drawing
 
             print("                __________________________________________")
             print("       ________|    ____            _   _     _          |________")
@@ -467,7 +478,7 @@ while game_deaths != game_players and game_winner == -1:
             print("         /     |   |_|   \\__,_|_|   \\__|_|\\__,_|\\__,_|   |     \\")
             print("        /      |_________________________________________|      \\")
             print("       /__________)                                   (__________\\")
-            print(_difficulty)
+            print(_time)
             print(
                 f"       {_player_display} [{_player_health_bar}] {_player_health_num} --- {_target_health_num} [{_target_health_bar}]   Alvo")
             print()

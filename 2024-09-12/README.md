@@ -19,6 +19,9 @@ A interface do jogo é dinâmica e imersiva, simulando um campo de tiro ao alvo 
     - ~~Ambiente~~
     - ~~Animação do alvo~~
     - ~~Animação do disparo~~
+    - Animação de vitória
+    - Animação de dano
+    - Animação de derrota
     - ~~Vida do jogador~~
     - ~~Vida do alvo~~
     - Durabilidade do colete
