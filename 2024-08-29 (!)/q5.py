@@ -6,7 +6,7 @@ t = float(input("Qual a nota do trabalho? "))
 ms = (n1 + n2) / 2
 mp = (ms * 60 + t * 40) / 100
 
-if (mp >= 6 and p >= 75):
+if mp >= 6 and p >= 75:
 	print("Você foi aprovado!")
 else:
 	print("Você foi reprovado!")
