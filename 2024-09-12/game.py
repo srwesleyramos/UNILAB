@@ -13,14 +13,17 @@ import time
 WEAPON_DISPLAY_1 = "Arco e Flecha"
 WEAPON_PRECISION_1 = 80
 WEAPON_DAMAGE_1 = 20
+WEAPON_SPEED_1 = 0.33
 
 WEAPON_DISPLAY_2 = "Pistola"
 WEAPON_PRECISION_2 = 40
 WEAPON_DAMAGE_2 = 60
+WEAPON_SPEED_2 = 0.23
 
 WEAPON_DISPLAY_3 = "Bazuka"
 WEAPON_PRECISION_3 = 10
 WEAPON_DAMAGE_3 = 80
+WEAPON_SPEED_3 = 0.13
 
 # Dificuldade
 
@@ -147,7 +150,7 @@ while True:
 
         print(f"\n  A dificuldade {difficulty_display} foi escolhida com sucesso!")
 
-        time.sleep(2)
+        time.sleep(3)
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
@@ -181,7 +184,7 @@ while True:
     if _count == '1' or _count == '2' or _count == '3':
         game_players = int(_count)
 
-        time.sleep(2)
+        time.sleep(3)
 
         break
     else:
@@ -229,6 +232,8 @@ while _index != game_players:
         globals()[f"player_display_{_index}"] = _name
 
         # TODO: adicionar seleção de equipamento
+
+        time.sleep(3)
     else:
         print("\n  O nome fornecido não respeita as regras estabelecidas.")
         _index -= 1
@@ -299,22 +304,22 @@ while game_deaths != game_players and game_winner == -1:
     round_target_x_final = round_target_x
     round_target_y_final = round_target_y
 
-    _round_time = 0
-    _round_final = (round_target_speed * 1000) * 48
-    _round_path = 0
+    _fake_time = 0
+    _fake_final = (round_target_speed * 1000) * 48
+    _fake_path = 0
 
-    while _round_time <= _round_final:
-        if _round_path:
+    while _fake_time <= _fake_final:
+        if _fake_path:
             round_target_y_final += 1
         else:
             round_target_y_final -= 1
 
         if round_target_y_final == 5:
-            _round_path = 0
+            _fake_path = 0
         elif round_target_y_final == 0:
-            _round_path = 1
+            _fake_path = 1
 
-        _round_time += (round_target_speed * 1000)
+        _fake_time += (round_target_speed * 1000)
 
     # Trail prediction
 
@@ -381,36 +386,36 @@ while game_deaths != game_players and game_winner == -1:
 
             # Target
 
-            _target_part_1 = "     "
-            _target_part_2 = "     "
-            _target_part_3 = "     "
-            _target_part_4 = "     "
-            _target_part_5 = "     "
-            _target_part_6 = "     "
-            _target_part_7 = "     "
-            _target_part_8 = "     "
+            screen_target_part_1 = "     "
+            screen_target_part_2 = "     "
+            screen_target_part_3 = "     "
+            screen_target_part_4 = "     "
+            screen_target_part_5 = "     "
+            screen_target_part_6 = "     "
+            screen_target_part_7 = "     "
+            screen_target_part_8 = "     "
 
             _index = round_target_y - 1
 
             while _index != -1:
-                globals()[f"_target_part_{8 - _index}"] = ASCII_TARGET_PART_4
+                globals()[f"screen_target_part_{8 - _index}"] = ASCII_TARGET_PART_4
                 _index -= 1
 
-            globals()[f"_target_part_{8 - round_target_y - 2}"] = ASCII_TARGET_PART_1
-            globals()[f"_target_part_{8 - round_target_y - 1}"] = ASCII_TARGET_PART_2
-            globals()[f"_target_part_{8 - round_target_y}"] = ASCII_TARGET_PART_3
+            globals()[f"screen_target_part_{8 - round_target_y - 2}"] = ASCII_TARGET_PART_1
+            globals()[f"screen_target_part_{8 - round_target_y - 1}"] = ASCII_TARGET_PART_2
+            globals()[f"screen_target_part_{8 - round_target_y}"] = ASCII_TARGET_PART_3
 
             # World
 
-            _world_part_1 = "                                                                       "
-            _world_part_2 = f"  O                                                  {_target_part_1}             "
-            _world_part_3 = f" /|\\                                                 {_target_part_2}             "
-            _world_part_4 = f" / \\                                                 {_target_part_3}             "
-            _world_part_5 = f" ---                                                 {_target_part_4}            _"
-            _world_part_6 = f"/__/|__                                              {_target_part_5}         __//|"
-            _world_part_7 = f"|__|/_/|__                                           {_target_part_6}       _/_|_||"
-            _world_part_8 = f"|_|___|/_/|__                                        {_target_part_7}    __/_|___||"
-            _world_part_9 = f"|___|____|/_/|__                                     {_target_part_8} __/_|____|_||"
+            screen_world_part_1 = "                                                                       "
+            screen_world_part_2 = f"  O                                                  {screen_target_part_1}             "
+            screen_world_part_3 = f" /|\\                                                 {screen_target_part_2}             "
+            screen_world_part_4 = f" / \\                                                 {screen_target_part_3}             "
+            screen_world_part_5 = f" ---                                                 {screen_target_part_4}            _"
+            screen_world_part_6 = f"/__/|__                                              {screen_target_part_5}         __//|"
+            screen_world_part_7 = f"|__|/_/|__                                           {screen_target_part_6}       _/_|_||"
+            screen_world_part_8 = f"|_|___|/_/|__                                        {screen_target_part_7}    __/_|___||"
+            screen_world_part_9 = f"|___|____|/_/|__                                     {screen_target_part_8} __/_|____|_||"
 
             _index = 0
 
@@ -418,7 +423,7 @@ while game_deaths != game_players and game_winner == -1:
                 x = 0
                 y = _index
 
-                current_line = globals()[f"_world_part_{9 - y}"]
+                current_line = globals()[f"screen_world_part_{9 - y}"]
                 updated_line = ""
 
                 while x != 71:
@@ -430,43 +435,50 @@ while game_deaths != game_players and game_winner == -1:
                         updated_line += current_line[x]
                     x += 1
 
-                globals()[f"_world_part_{9 - y}"] = updated_line
+                globals()[f"screen_world_part_{9 - y}"] = updated_line
 
                 _index += 1
 
             # Player's data
 
-            _player_display = globals()[f'player_display_{game_player}']
+            screen_player_display = globals()[f'player_display_{game_player}']
 
-            if len(_player_display) != 6:
-                _player_display = "      "[:(6 - len(_player_display))] + _player_display
+            if len(screen_player_display) != 6:
+                screen_player_display = "      "[:(6 - len(screen_player_display))] + screen_player_display
 
-            _player_health_num = globals()[f'player_health_{game_player}']
-            _player_health_bar = "=============="[:(int(_player_health_num * 14 / 100))]
+            screen_player_health_num = globals()[f'player_health_{game_player}']
+            screen_player_health_bar = "=============="[:(int(screen_player_health_num * 14 / 100))]
 
-            if len(_player_health_bar) != 14:
-                _player_health_bar = _player_health_bar + "              "[:(14 - len(_player_health_bar))]
+            # TODO: adicionar animação do colete
 
-            if len(str(_player_health_num)) != 3:
-                _player_health_num = "   "[:(3 - len(str(_player_health_num)))] + str(_player_health_num)
+            if len(screen_player_health_bar) != 14:
+                screen_player_health_bar = screen_player_health_bar + "              "[
+                                                                      :(14 - len(screen_player_health_bar))]
+
+            if len(str(screen_player_health_num)) != 3:
+                screen_player_health_num = "   "[:(3 - len(str(screen_player_health_num)))] + str(
+                    screen_player_health_num)
 
             # Target's data
 
-            _target_health_num = globals()[f'player_target_{game_player}']
-            _target_health_bar = "=============="[:(int(_target_health_num * 14 / 100))]
+            screen_target_health_num = globals()[f'player_target_{game_player}']
+            screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 100))]
 
-            if len(_target_health_bar) != 14:
-                _target_health_bar = _target_health_bar + "              "[:(14 - len(_target_health_bar))]
+            if len(str(screen_target_health_num)) != 3:
+                screen_target_health_num = str(screen_target_health_num) + "   "[
+                                                                           :(3 - len(str(screen_target_health_num)))]
 
-            if len(str(_target_health_num)) != 3:
-                _target_health_num = str(_target_health_num) + "   "[:(3 - len(str(_target_health_num)))]
+            if len(screen_target_health_bar) != 14:
+                screen_target_health_bar = screen_target_health_bar + "              "[
+                                                                      :(14 - len(screen_target_health_bar))]
 
             # Round time
 
-            _time_min = int(round_time / 60000)
-            _time_sec = int((round_time - _time_min * 60000) / 1000)
-            _time = "                                                                       "[:int(73 / 2 - 2.5)]
-            _time += f"{_time_min:02d}:{_time_sec:02d}"
+            _screen_time_min = int(round_time / 60000)
+            _screen_time_sec = int((round_time - _screen_time_min * 60000) / 1000)
+
+            screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
+            screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
 
             # Drawing
 
@@ -478,21 +490,21 @@ while game_deaths != game_players and game_winner == -1:
             print("         /     |   |_|   \\__,_|_|   \\__|_|\\__,_|\\__,_|   |     \\")
             print("        /      |_________________________________________|      \\")
             print("       /__________)                                   (__________\\")
-            print(_time)
+            print(screen_time)
             print(
-                f"       {_player_display} [{_player_health_bar}] {_player_health_num} --- {_target_health_num} [{_target_health_bar}]   Alvo")
+                f"       {screen_player_display} [{screen_player_health_bar}] {screen_player_health_num} --- {screen_target_health_num} [{screen_target_health_bar}]   Alvo")
             print()
             print()
             print()
-            print(_world_part_1)
-            print(_world_part_2)
-            print(_world_part_3)
-            print(_world_part_4)
-            print(_world_part_5)
-            print(_world_part_6)
-            print(_world_part_7)
-            print(_world_part_8)
-            print(_world_part_9)
+            print(screen_world_part_1)
+            print(screen_world_part_2)
+            print(screen_world_part_3)
+            print(screen_world_part_4)
+            print(screen_world_part_5)
+            print(screen_world_part_6)
+            print(screen_world_part_7)
+            print(screen_world_part_8)
+            print(screen_world_part_9)
             print("|_|___|_____|/_/|______________________________________|__/_|_____|___||")
             print("|___|___|__|___|/__/___/___/___/___/___/___/___/___/___/_|_____|____|_||")
             print("|_|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___||")
@@ -502,9 +514,10 @@ while game_deaths != game_players and game_winner == -1:
         # Health check
 
         round_running = round_trail_head_x != round_trail_x_final or round_trail_head_y != round_trail_y_final
-        round_time += 50
 
         # Elapsed time
+
+        round_time += 50
 
         time.sleep(0.05)
 
