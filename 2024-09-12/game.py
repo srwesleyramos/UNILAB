@@ -28,20 +28,30 @@ WEAPON_SPEED_3 = 0.13
 # Dificuldade
 
 DIFFICULTY_DISPLAY_1 = "Fácil"
-DIFFICULTY_DAMAGE_1 = 20
+DIFFICULTY_DAMAGE_1 = 15
 DIFFICULTY_SPEED_1 = 0.7
 
 DIFFICULTY_DISPLAY_2 = "Médio"
-DIFFICULTY_DAMAGE_2 = 25
+DIFFICULTY_DAMAGE_2 = 20
 DIFFICULTY_SPEED_2 = 0.5
 
 DIFFICULTY_DISPLAY_3 = "Díficil"
-DIFFICULTY_DAMAGE_3 = 30
+DIFFICULTY_DAMAGE_3 = 25
 DIFFICULTY_SPEED_3 = 0.3
 
 # Equipamento
 
-# TODO: criar configuração dos equipamentos
+EQUIPMENT_DISPLAY_1 = "Colete de couro"
+EQUIPMENT_PROTECTION_1 = 10
+EQUIPMENT_DURABILITY_1 = 50
+
+EQUIPMENT_DISPLAY_2 = "Colete de ouro"
+EQUIPMENT_PROTECTION_2 = 15
+EQUIPMENT_DURABILITY_2 = 35
+
+EQUIPMENT_DISPLAY_3 = "Colete de diamante"
+EQUIPMENT_PROTECTION_3 = 20
+EQUIPMENT_DURABILITY_3 = 20
 
 #
 # ASCII TEXT
@@ -104,7 +114,7 @@ print()
 print("                  by @srwesleyramos")
 print()
 
-time.sleep(2)
+time.sleep(1)
 
 # Escolhendo a dificuldade
 
@@ -148,12 +158,12 @@ while True:
 
         print(f"\n  A dificuldade {difficulty_display} foi escolhida com sucesso!")
 
-        time.sleep(2)
+        time.sleep(1.5)
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
 
-    time.sleep(2)
+    time.sleep(1.5)
 
 # Escolhendo a quantidade de jogadores
 
@@ -182,26 +192,38 @@ while True:
     if _count == '1' or _count == '2' or _count == '3':
         game_players = int(_count)
 
-        time.sleep(2)
+        time.sleep(1.5)
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
 
-    time.sleep(2)
+    time.sleep(1.5)
 
 # Escolhendo os personagens
 
 player_display_1 = None
 player_health_1 = 100
 player_target_1 = 200
+player_equipment_display_1 = None
+player_equipment_protection_1 = None
+player_equipment_durability_1 = None
+player_equipment_health_1 = None
 
 player_display_2 = None
 player_health_2 = 100
 player_target_2 = 200
+player_equipment_display_2 = None
+player_equipment_protection_2 = None
+player_equipment_durability_2 = None
+player_equipment_health_2 = None
 
 player_display_3 = None
 player_health_3 = 100
 player_target_3 = 200
+player_equipment_display_3 = None
+player_equipment_protection_3 = None
+player_equipment_durability_3 = None
+player_equipment_health_3 = None
 
 _index = 0
 
@@ -228,12 +250,54 @@ while _index != game_players:
     if (len(_name) > 2) and (len(_name) < 7):
         globals()[f"player_display_{_index}"] = _name
 
-        # TODO: adicionar seleção de equipamento
+        while True:
+            os.system("cls")
+
+            print("           _______________________________________________________________________ ")
+            print("  ________|    _____ ___  _   _ ___ ____   _    __  __ _____ _   _ _____ ___     |________")
+            print("  \\       |   | ____/ _ \\| | | |_ _|  _ \\ / \\  |  \\/  | ____| \\ | |_   _/ _ \\    |       /")
+            print("   \\      |   |  _|| | | | | | || || |_) / _ \\ | |\\/| |  _| |  \\| | | || | | |   |      /")
+            print("    \\     |   | |__| |_| | |_| || ||  __/ ___ \\| |  | | |___| |\\  | | || |_| |   |     /")
+            print("    /     |   |_____\\__\\_\\\\___/|___|_| /_/   \\_\\_|  |_|_____|_| \\_| |_| \\___/    |     \\")
+            print("   /      |______________________________________________________________________|      \\")
+            print("  /__________)                                                                (__________\\")
+            print()
+            print("    Escolha o equipamento que você deseja para o jogo. Certifique-se de usar ")
+            print("  o valor correspondente ao desejado.")
+            print()
+
+            _i = 1
+
+            while f"EQUIPMENT_DISPLAY_{_i}" in globals():
+                print(f"    {_i}:")
+                print(f"      - Título: {globals()[f"EQUIPMENT_DISPLAY_{_i}"]}")
+                print(f"      - Durabilidade: {globals()[f"EQUIPMENT_DURABILITY_{_i}"]}")
+                print(f"      - Proteção: {globals()[f"EQUIPMENT_PROTECTION_{_i}"]}")
+                print()
+
+                _i += 1
+
+            _equipment = input("  >> ")
+
+            if f"EQUIPMENT_DISPLAY_{_equipment}" in globals():
+                globals()[f"player_equipment_display_{_index}"] = globals()[f"EQUIPMENT_DISPLAY_{_equipment}"]
+                globals()[f"player_equipment_protection_{_index}"] = globals()[f"EQUIPMENT_PROTECTION_{_equipment}"]
+                globals()[f"player_equipment_durability_{_index}"] = globals()[f"EQUIPMENT_DURABILITY_{_equipment}"]
+                globals()[f"player_equipment_health_{_index}"] = globals()[f"EQUIPMENT_DURABILITY_{_equipment}"]
+
+                print(f"\n  O equipamento {globals()[f"player_equipment_display_{_index}"]} foi escolhido com sucesso!")
+
+                time.sleep(1.5)
+                break
+            else:
+                print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
+
+            time.sleep(1.5)
     else:
         print("\n  O nome fornecido não respeita as regras estabelecidas.")
         _index -= 1
 
-    time.sleep(2)
+    time.sleep(1.5)
 
 #
 # PARTIDA
@@ -255,6 +319,33 @@ while game_deaths != game_players and game_winner == -1:
 
     if globals()[f'player_health_{game_player}'] == 0:
         continue
+
+    # Printing current player
+
+    os.system('cls')
+
+    print(f"           ___________________________________{globals()[f"ASCII_NUMBER_{game_player}_PART_1"]}____ ")
+    print(
+        f"  ________|    ____  _                        {globals()[f"ASCII_NUMBER_{game_player}_PART_2"]}   |________")
+    print(
+        f"  \\       |   |  _ \\| | __ _ _   _  ___ _ __  {globals()[f"ASCII_NUMBER_{game_player}_PART_3"]}   |       /")
+    print(
+        f"   \\      |   | |_) | |/ _` | | | |/ _ \\ '__| {globals()[f"ASCII_NUMBER_{game_player}_PART_4"]}   |      /")
+    print(f"    \\     |   |  __/| | (_| | |_| |  __/ |    {globals()[f"ASCII_NUMBER_{game_player}_PART_5"]}   |     /")
+    print(
+        f"    /     |   |_|   |_|\\__,_|\\__, |\\___|_|    {globals()[f"ASCII_NUMBER_{game_player}_PART_6"]}   |     \\")
+    print(
+        f"   /      |_________________ |___/ ___________{globals()[f"ASCII_NUMBER_{game_player}_PART_7"]}___|      \\")
+    print(
+        f"  /__________)                                {globals()[f"ASCII_NUMBER_{game_player}_PART_8"]}(__________\\")
+    print()
+    print("                       /\\' .\\    _____  ")
+    print("                      /: \\___\\  / .  /\\ ")
+    print("                      \\' / . / /____/..\\")
+    print("                       \\/___/  \\'  '\\  /")
+    print("                                \\'__'\\/ ")
+
+    time.sleep(1)
 
     # Weapon's properties
 
@@ -296,12 +387,12 @@ while game_deaths != game_players and game_winner == -1:
 
             print(f"\n  O armamento {round_weapon_display} foi escolhido com sucesso!")
 
-            time.sleep(2)
+            time.sleep(1.5)
             break
         else:
             print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
 
-        time.sleep(2)
+        time.sleep(1.5)
 
     # Target's properties
 
@@ -482,7 +573,16 @@ while game_deaths != game_players and game_winner == -1:
             screen_player_health_num = globals()[f'player_health_{game_player}']
             screen_player_health_bar = "=============="[:(int(screen_player_health_num * 14 / 100))]
 
-            # TODO: adicionar animação do colete
+            screen_player_equipment_health = globals()[f'player_equipment_health_{game_player}']
+            screen_player_equipment_total = globals()[f'player_equipment_durability_{game_player}']
+            screen_player_equipment_bar = "#######"[
+                                          :(int(screen_player_equipment_health / screen_player_equipment_total * 7))]
+
+            if len(screen_player_health_bar) > len(screen_player_equipment_bar):
+                screen_player_health_bar = screen_player_equipment_bar + screen_player_health_bar[
+                                                                         len(screen_player_equipment_bar)::]
+            else:
+                screen_player_health_bar = screen_player_equipment_bar
 
             if len(screen_player_health_bar) != 14:
                 screen_player_health_bar = screen_player_health_bar + "              "[
@@ -525,7 +625,7 @@ while game_deaths != game_players and game_winner == -1:
             print("       /__________)                                   (__________\\")
             print(screen_time)
             print(
-                f"       {screen_player_display} [{screen_player_health_bar}] {screen_player_health_num} --- {screen_target_health_num} [{screen_target_health_bar}]   Alvo")
+                f"       {screen_player_display} [{screen_player_health_bar}] {screen_player_health_num} --- {screen_target_health_num} [{screen_target_health_bar}] Alvo")
             print()
             print()
             print()
@@ -557,11 +657,27 @@ while game_deaths != game_players and game_winner == -1:
     # Damage
 
     if round_won:
+        round_damage = round_weapon_damage
+
         globals()[f'player_target_{game_player}'] = max(
-            globals()[f'player_target_{game_player}'] - round_weapon_damage, 0)
+            globals()[f'player_target_{game_player}'] - round_damage, 0)
     else:
+        round_damage = difficulty_damage
+        round_reduce = 0
+
+        if globals()[f'player_equipment_health_{game_player}'] > 0:
+            round_reduce = min(
+                round_damage * (globals()[f'player_equipment_protection_{game_player}'] / 100),
+                globals()[f'player_equipment_health_{game_player}']
+            )
+
+            round_damage -= round_reduce
+
         globals()[f'player_health_{game_player}'] = max(
-            globals()[f'player_health_{game_player}'] - difficulty_damage, 0)
+            globals()[f'player_health_{game_player}'] - round_damage, 0)
+
+        globals()[f'player_equipment_health_{game_player}'] = max(
+            globals()[f'player_equipment_health_{game_player}'] - round_reduce, 0)
 
     # TODO: adicionar animação ao receber dano ou dar dano;
 
@@ -579,4 +695,4 @@ while game_deaths != game_players and game_winner == -1:
 
     # TODO: adicionar animação na perda;
 
-    time.sleep(2)
+    time.sleep(1.5)
