@@ -90,8 +90,6 @@ ASCII_TRAIL_PART_2 = "#"
 # APLICAÇÃO
 #
 
-os.system('cls')
-
 print()
 print("         _____  _    ____   ____ _____ _____")
 print("        |_   _|/ \\  |  _ \\ / ___| ____|_   _|")
@@ -106,8 +104,6 @@ print()
 print("                  by @srwesleyramos")
 print()
 
-time.sleep(3)
-
 # Escolhendo a dificuldade
 
 difficulty_damage = None
@@ -115,6 +111,7 @@ difficulty_display = None
 difficulty_speed = None
 
 while True:
+    time.sleep(2)
     os.system("cls")
 
     print("           __________________________________________________________ ")
@@ -149,19 +146,16 @@ while True:
         difficulty_speed = globals()[f"DIFFICULTY_SPEED_{_difficulty}"]
 
         print(f"\n  A dificuldade {difficulty_display} foi escolhida com sucesso!")
-
-        time.sleep(3)
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
-
-    time.sleep(2)
 
 # Escolhendo a quantidade de jogadores
 
 game_players = None
 
 while True:
+    time.sleep(2)
     os.system("cls")
 
     print("           __________________________________________        ")
@@ -183,14 +177,9 @@ while True:
 
     if _count == '1' or _count == '2' or _count == '3':
         game_players = int(_count)
-
-        time.sleep(3)
-
         break
     else:
         print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
-
-    time.sleep(2)
 
 # Escolhendo os personagens
 
@@ -209,6 +198,7 @@ player_target_3 = 200
 _index = 0
 
 while _index != game_players:
+    time.sleep(2)
     os.system("cls")
 
     _index += 1
@@ -232,13 +222,9 @@ while _index != game_players:
         globals()[f"player_display_{_index}"] = _name
 
         # TODO: adicionar seleção de equipamento
-
-        time.sleep(3)
     else:
         print("\n  O nome fornecido não respeita as regras estabelecidas.")
         _index -= 1
-
-    time.sleep(2)
 
 #
 # PARTIDA
@@ -263,12 +249,49 @@ while game_deaths != game_players and game_winner == -1:
 
     # Weapon's properties
 
-    # TODO: adicionar seleção do armamento
+    while True:
+        time.sleep(2)
+        os.system("cls")
 
-    round_weapon_display = 'Arco e flecha'
-    round_weapon_precision = 80
-    round_weapon_damage = 20
-    round_weapon_speed = 0.35
+        print("           ___________________________________________________________________ ")
+        print("  ________|       _    ____  __  __    _    __  __ _____ _   _ _____ ___     |________")
+        print("  \\       |      / \\  |  _ \\|  \\/  |  / \\  |  \\/  | ____| \\ | |_   _/ _ \\    |       /")
+        print("   \\      |     / _ \\ | |_) | |\\/| | / _ \\ | |\\/| |  _| |  \\| | | || | | |   |      /")
+        print("    \\     |    / ___ \\|  _ <| |  | |/ ___ \\| |  | | |___| |\\  | | || |_| |   |     /")
+        print("    /     |   /_/   \\_\\_| \\_\\_|  |_/_/   \\_\\_|  |_|_____|_| \\_| |_| \\___/    |     \\")
+        print("   /      |__________________________________________________________________|      \\")
+        print("  /__________)                                                            (__________\\")
+        print()
+        print("    Escolha o armamento que você deseja para o jogo. Certifique-se de usar ")
+        print("  o valor correspondente ao desejado.")
+        print()
+
+        _index = 1
+
+        while f"WEAPON_DISPLAY_{_index}" in globals():
+            print(f"    {_index}:")
+            print(f"      - Título: {globals()[f"WEAPON_DISPLAY_{_index}"]}")
+            print(f"      - Precisão: {globals()[f"WEAPON_PRECISION_{_index}"]}")
+            print(f"      - Dano: {globals()[f"WEAPON_DAMAGE_{_index}"]}")
+            print(f"      - Velocidade: {globals()[f"WEAPON_SPEED_{_index}"]}")
+            print()
+
+            _index += 1
+
+        _weapon = input("  >> ")
+
+        if f"WEAPON_DISPLAY_{_weapon}" in globals():
+            round_weapon_display = globals()[f"WEAPON_DISPLAY_{_weapon}"]
+            round_weapon_precision = globals()[f"WEAPON_PRECISION_{_weapon}"]
+            round_weapon_damage = globals()[f"WEAPON_DAMAGE_{_weapon}"]
+            round_weapon_speed = globals()[f"WEAPON_SPEED_{_weapon}"]
+
+            print(f"\n  O armamento {round_weapon_display} foi escolhido com sucesso!")
+
+            time.sleep(2)
+            break
+        else:
+            print("\n  Você inseriu um valor inválido, verifique e tente novamente.")
 
     # Target's properties
 
@@ -305,7 +328,7 @@ while game_deaths != game_players and game_winner == -1:
     round_target_y_final = round_target_y
 
     _fake_time = 0
-    _fake_final = (round_target_speed * 1000) * 48
+    _fake_final = (round_weapon_speed * 48) * 1000
     _fake_path = 0
 
     while _fake_time <= _fake_final:

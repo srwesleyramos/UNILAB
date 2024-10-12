@@ -14,7 +14,7 @@ A interface do jogo é dinâmica e imersiva, simulando um campo de tiro ao alvo 
 - ~~Seleção de jogadores (1-3);~~
 - ~~Seleção de personagem;~~
 - Seleção do colete protetor;
-- Seleção do armamento;
+- ~~Seleção do armamento;~~
 - Interface interativa:
     - ~~Ambiente~~
     - ~~Animação do alvo~~
