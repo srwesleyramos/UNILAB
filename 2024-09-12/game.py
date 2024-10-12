@@ -330,7 +330,7 @@ while game_deaths != game_players and game_winner == -1:
 
     round_running = True
     round_time = 0
-    round_won = (round_weapon_precision / 100) < random.random()
+    round_won = random.random() < (round_weapon_precision / 100)
 
     # Target prediction
 
@@ -578,3 +578,5 @@ while game_deaths != game_players and game_winner == -1:
         game_deaths += 1
 
     # TODO: adicionar animação na perda;
+
+    time.sleep(2)
