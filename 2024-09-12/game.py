@@ -306,6 +306,7 @@ while _index != game_players:
 game_player = game_players
 game_winner = -1
 game_deaths = 0
+game_time = time.time()
 
 while game_deaths != game_players and game_winner == -1:
     # Changing player
@@ -570,7 +571,7 @@ while game_deaths != game_players and game_winner == -1:
             if len(screen_player_display) != 6:
                 screen_player_display = "      "[:(6 - len(screen_player_display))] + screen_player_display
 
-            screen_player_health_num = globals()[f'player_health_{game_player}']
+            screen_player_health_num = int(globals()[f'player_health_{game_player}'])
             screen_player_health_bar = "=============="[:(int(screen_player_health_num * 14 / 100))]
 
             screen_player_equipment_health = globals()[f'player_equipment_health_{game_player}']
@@ -594,7 +595,7 @@ while game_deaths != game_players and game_winner == -1:
 
             # Target's data
 
-            screen_target_health_num = globals()[f'player_target_{game_player}']
+            screen_target_health_num = int(globals()[f'player_target_{game_player}'])
             screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 200))]
 
             if len(str(screen_target_health_num)) != 3:
@@ -607,8 +608,9 @@ while game_deaths != game_players and game_winner == -1:
 
             # Round time
 
-            _screen_time_min = int(round_time / 60000)
-            _screen_time_sec = int((round_time - _screen_time_min * 60000) / 1000)
+            _screen_time = time.time() - game_time
+            _screen_time_min = int(_screen_time / 60)
+            _screen_time_sec = int(_screen_time - _screen_time_min * 60)
 
             screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
             screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
@@ -745,7 +747,7 @@ while game_deaths != game_players and game_winner == -1:
     if len(screen_player_display) != 6:
         screen_player_display = "      "[:(6 - len(screen_player_display))] + screen_player_display
 
-    screen_player_health_num = globals()[f'player_health_{game_player}']
+    screen_player_health_num = int(globals()[f'player_health_{game_player}'])
     screen_player_health_bar = "=============="[:(int(screen_player_health_num * 14 / 100))]
 
     screen_player_equipment_health = globals()[f'player_equipment_health_{game_player}']
@@ -769,7 +771,7 @@ while game_deaths != game_players and game_winner == -1:
 
     # Target's data
 
-    screen_target_health_num = globals()[f'player_target_{game_player}']
+    screen_target_health_num = int(globals()[f'player_target_{game_player}'])
     screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 200))]
 
     if len(str(screen_target_health_num)) != 3:
@@ -780,20 +782,21 @@ while game_deaths != game_players and game_winner == -1:
         screen_target_health_bar = screen_target_health_bar + "              "[
                                                               :(14 - len(screen_target_health_bar))]
 
-    # Round time
-
-    _screen_time_min = int(round_time / 60000)
-    _screen_time_sec = int((round_time - _screen_time_min * 60000) / 1000)
-
-    screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
-    screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
-
     # Updating billboard
 
     billboard_current = ""
     billboard_x = 0
 
     while True:
+        # Round time
+
+        _screen_time = time.time() - game_time
+        _screen_time_min = int(_screen_time / 60)
+        _screen_time_sec = int(_screen_time - _screen_time_min * 60)
+
+        screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
+        screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
+
         # Billboard
 
         billboard_x += 1
@@ -864,6 +867,15 @@ while game_deaths != game_players and game_winner == -1:
     billboard_space = " " * 29
 
     while billboard_text is not None:
+        # Round time
+
+        _screen_time = time.time() - game_time
+        _screen_time_min = int(_screen_time / 60)
+        _screen_time_sec = int(_screen_time - _screen_time_min * 60)
+
+        screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
+        screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
+
         # Billboard
 
         billboard_x += 1
