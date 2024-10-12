@@ -9,21 +9,21 @@ Antes de iniciar a partida, os jogadores devem escolher um colete protetor, que 
 A interface do jogo é dinâmica e imersiva, simulando um campo de tiro ao alvo com animações detalhadas para cada tipo de arma. Além disso, o painel exibe em tempo real a vida dos jogadores e a condição de seus alvos, proporcionando uma experiência visual rica e envolvente.
 
 ## Features:
-- ~~Configuração dinâmica;~~
-- ~~Seleção de dificuldade;~~
-- ~~Seleção de jogadores (1-3);~~
-- ~~Seleção de personagem;~~
+- Configuração dinâmica;
+- Seleção de dificuldade;
+- Seleção de jogadores (1-3);
+- Seleção de personagem;
 - Seleção do colete protetor;
-- ~~Seleção do armamento;~~
+- Seleção do armamento;
 - Interface interativa:
-    - ~~Ambiente~~
-    - ~~Animação do alvo~~
-    - ~~Animação do disparo~~
+    - Ambiente
+    - Animação do alvo
+    - Animação do disparo
     - Animação de vitória
     - Animação de dano
     - Animação de derrota
-    - ~~Vida do jogador~~
-    - ~~Vida do alvo~~
+    - Vida do jogador
+    - Vida do alvo
     - Durabilidade do colete
   
 </div>

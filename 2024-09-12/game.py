@@ -595,7 +595,7 @@ while game_deaths != game_players and game_winner == -1:
             # Target's data
 
             screen_target_health_num = globals()[f'player_target_{game_player}']
-            screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 100))]
+            screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 200))]
 
             if len(str(screen_target_health_num)) != 3:
                 screen_target_health_num = str(screen_target_health_num) + "   "[
@@ -656,12 +656,7 @@ while game_deaths != game_players and game_winner == -1:
 
     # Damage
 
-    if round_won:
-        round_damage = round_weapon_damage
-
-        globals()[f'player_target_{game_player}'] = max(
-            globals()[f'player_target_{game_player}'] - round_damage, 0)
-    else:
+    if not round_won:
         round_damage = difficulty_damage
         round_reduce = 0
 
@@ -673,26 +668,258 @@ while game_deaths != game_players and game_winner == -1:
 
             round_damage -= round_reduce
 
+        billboard_text = f"VOCÊ RECEBEU {int(round_damage)} DE DANO!"
+
         globals()[f'player_health_{game_player}'] = max(
             globals()[f'player_health_{game_player}'] - round_damage, 0)
 
         globals()[f'player_equipment_health_{game_player}'] = max(
             globals()[f'player_equipment_health_{game_player}'] - round_reduce, 0)
+    else:
+        billboard_text = f"VOCÊ DEU {int(round_weapon_damage)} DE DANO!"
 
-    # TODO: adicionar animação ao receber dano ou dar dano;
+        globals()[f'player_target_{game_player}'] = max(
+            globals()[f'player_target_{game_player}'] - round_weapon_damage, 0)
+
+    # Updating screen #1
+
+    # Target
+
+    screen_target_part_1 = "     "
+    screen_target_part_2 = "     "
+    screen_target_part_3 = "     "
+    screen_target_part_4 = "     "
+    screen_target_part_5 = "     "
+    screen_target_part_6 = "     "
+    screen_target_part_7 = "     "
+    screen_target_part_8 = "     "
+
+    _index = round_target_y - 1
+
+    while _index != -1:
+        globals()[f"screen_target_part_{8 - _index}"] = ASCII_TARGET_PART_4
+        _index -= 1
+
+    globals()[f"screen_target_part_{8 - round_target_y - 2}"] = ASCII_TARGET_PART_1
+    globals()[f"screen_target_part_{8 - round_target_y - 1}"] = ASCII_TARGET_PART_2
+    globals()[f"screen_target_part_{8 - round_target_y}"] = ASCII_TARGET_PART_3
+
+    # World
+
+    screen_world_part_1 = "                                                                       "
+    screen_world_part_2 = f"  O                                                  {screen_target_part_1}             "
+    screen_world_part_3 = f" /|\\                                                 {screen_target_part_2}             "
+    screen_world_part_4 = f" / \\                                                 {screen_target_part_3}             "
+    screen_world_part_5 = f" ---                                                 {screen_target_part_4}            _"
+    screen_world_part_6 = f"/__/|__                                              {screen_target_part_5}         __//|"
+    screen_world_part_7 = f"|__|/_/|__                                           {screen_target_part_6}       _/_|_||"
+    screen_world_part_8 = f"|_|___|/_/|__                                        {screen_target_part_7}    __/_|___||"
+    screen_world_part_9 = f"|___|____|/_/|__                                     {screen_target_part_8} __/_|____|_||"
+
+    _index = 0
+
+    while _index != 9:
+        x = 0
+        y = _index
+
+        current_line = globals()[f"screen_world_part_{9 - y}"]
+        updated_line = ""
+
+        while x != 71:
+            if (x == round_trail_head_x) and (y == round_trail_head_y):
+                updated_line += ASCII_TRAIL_PART_1
+            elif (x == round_trail_tail_x) and (y == round_trail_tail_y):
+                updated_line += ASCII_TRAIL_PART_2
+            else:
+                updated_line += current_line[x]
+            x += 1
+
+        globals()[f"screen_world_part_{9 - y}"] = updated_line
+
+        _index += 1
+
+    # Player's data
+
+    screen_player_display = globals()[f'player_display_{game_player}']
+
+    if len(screen_player_display) != 6:
+        screen_player_display = "      "[:(6 - len(screen_player_display))] + screen_player_display
+
+    screen_player_health_num = globals()[f'player_health_{game_player}']
+    screen_player_health_bar = "=============="[:(int(screen_player_health_num * 14 / 100))]
+
+    screen_player_equipment_health = globals()[f'player_equipment_health_{game_player}']
+    screen_player_equipment_total = globals()[f'player_equipment_durability_{game_player}']
+    screen_player_equipment_bar = "#######"[
+                                  :(int(screen_player_equipment_health / screen_player_equipment_total * 7))]
+
+    if len(screen_player_health_bar) > len(screen_player_equipment_bar):
+        screen_player_health_bar = screen_player_equipment_bar + screen_player_health_bar[
+                                                                 len(screen_player_equipment_bar)::]
+    else:
+        screen_player_health_bar = screen_player_equipment_bar
+
+    if len(screen_player_health_bar) != 14:
+        screen_player_health_bar = screen_player_health_bar + "              "[
+                                                              :(14 - len(screen_player_health_bar))]
+
+    if len(str(screen_player_health_num)) != 3:
+        screen_player_health_num = "   "[:(3 - len(str(screen_player_health_num)))] + str(
+            screen_player_health_num)
+
+    # Target's data
+
+    screen_target_health_num = globals()[f'player_target_{game_player}']
+    screen_target_health_bar = "=============="[:(int(screen_target_health_num * 14 / 200))]
+
+    if len(str(screen_target_health_num)) != 3:
+        screen_target_health_num = str(screen_target_health_num) + "   "[
+                                                                   :(3 - len(str(screen_target_health_num)))]
+
+    if len(screen_target_health_bar) != 14:
+        screen_target_health_bar = screen_target_health_bar + "              "[
+                                                              :(14 - len(screen_target_health_bar))]
+
+    # Round time
+
+    _screen_time_min = int(round_time / 60000)
+    _screen_time_sec = int((round_time - _screen_time_min * 60000) / 1000)
+
+    screen_time = "                                                                       "[:int(73 / 2 - 2.5)]
+    screen_time += f"{_screen_time_min:02d}:{_screen_time_sec:02d}"
+
+    # Updating billboard
+
+    billboard_current = ""
+    billboard_x = 0
+
+    while True:
+        # Billboard
+
+        billboard_x += 1
+
+        if len(billboard_current) < len(billboard_text):
+            billboard_current = billboard_text[(len(billboard_text) - billboard_x):]
+        else:
+            billboard_current = f" {billboard_current}"
+
+        if (billboard_x - len(billboard_text)) == 72:
+            break
+
+        # Drawing
+
+        os.system('cls')
+
+        print("                __________________________________________")
+        print("       ________|    ____            _   _     _          |________")
+        print("       \\       |   |  _ \\ __ _ _ __| |_(_) __| | __ _    |       /")
+        print("        \\      |   | |_) / _` | '__| __| |/ _` |/ _` |   |      /")
+        print("         \\     |   |  __/ (_| | |  | |_| | (_| | (_| |   |     /")
+        print("         /     |   |_|   \\__,_|_|   \\__|_|\\__,_|\\__,_|   |     \\")
+        print("        /      |_________________________________________|      \\")
+        print("       /__________)                                   (__________\\")
+        print(screen_time)
+        print(
+            f"       {screen_player_display} [{screen_player_health_bar}] {screen_player_health_num} --- {screen_target_health_num} [{screen_target_health_bar}] Alvo")
+        print()
+        print(billboard_current[:71])
+        print()
+        print(screen_world_part_1)
+        print(screen_world_part_2)
+        print(screen_world_part_3)
+        print(screen_world_part_4)
+        print(screen_world_part_5)
+        print(screen_world_part_6)
+        print(screen_world_part_7)
+        print(screen_world_part_8)
+        print(screen_world_part_9)
+        print("|_|___|_____|/_/|______________________________________|__/_|_____|___||")
+        print("|___|___|__|___|/__/___/___/___/___/___/___/___/___/___/_|_____|____|_||")
+        print("|_|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___||")
+        print("|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|_||")
+        print("|_|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|/")
+
+        time.sleep(0.005)
+
+    billboard_text = None
 
     # Winner
 
     if globals()[f'player_target_{game_player}'] == 0:
         game_winner = game_player
 
-    # TODO: adicionar animação na vitória;
+        billboard_text = "VOCÊ GANHOU A PARTIDA, PARABÉNS!"
 
     # Loser
 
     if globals()[f'player_health_{game_player}'] == 0:
         game_deaths += 1
 
-    # TODO: adicionar animação na perda;
+        billboard_text = "VOCÊ PERDEU A PARTIDA!"
+
+    # Updating screen #2
+
+    billboard_current = ""
+    billboard_x = 0
+    billboard_space = " " * 29
+
+    while billboard_text is not None:
+        # Billboard
+
+        billboard_x += 1
+
+        if len(billboard_current) < len(billboard_text):
+            billboard_current = billboard_text[(len(billboard_text) - billboard_x):]
+        else:
+            billboard_current = f" {billboard_current}"
+
+        if (billboard_x - len(billboard_text)) == 72:
+            break
+
+        # Drawing
+
+        os.system('cls')
+
+        print(f"           ___________________________________{globals()[f"ASCII_NUMBER_{game_player}_PART_1"]}____ ")
+        print(
+            f"  ________|    ____  _                        {globals()[f"ASCII_NUMBER_{game_player}_PART_2"]}   |________")
+        print(
+            f"  \\       |   |  _ \\| | __ _ _   _  ___ _ __  {globals()[f"ASCII_NUMBER_{game_player}_PART_3"]}   |       /")
+        print(
+            f"   \\      |   | |_) | |/ _` | | | |/ _ \\ '__| {globals()[f"ASCII_NUMBER_{game_player}_PART_4"]}   |      /")
+        print(
+            f"    \\     |   |  __/| | (_| | |_| |  __/ |    {globals()[f"ASCII_NUMBER_{game_player}_PART_5"]}   |     /")
+        print(
+            f"    /     |   |_|   |_|\\__,_|\\__, |\\___|_|    {globals()[f"ASCII_NUMBER_{game_player}_PART_6"]}   |     \\")
+        print(
+            f"   /      |_________________ |___/ ___________{globals()[f"ASCII_NUMBER_{game_player}_PART_7"]}___|      \\")
+        print(
+            f"  /__________)                                {globals()[f"ASCII_NUMBER_{game_player}_PART_8"]}(__________\\")
+        print(screen_time)
+        print(
+            f"       {screen_player_display} [{screen_player_health_bar}] {screen_player_health_num} --- {screen_target_health_num} [{screen_target_health_bar}] Alvo")
+        print()
+        print(billboard_current[:71])
+        print()
+
+        if round_won:
+            print(f"{billboard_space}  ________  ")
+            print(f"{billboard_space} |        | ")
+            print(f"{billboard_space}(| GANHOU |)")
+            print(f"{billboard_space} |  !!!!  | ")
+            print(f"{billboard_space}  \\      /  ")
+            print(f"{billboard_space}   `----'   ")
+            print(f"{billboard_space}   _|__|_   ")
+        else:
+            print(f"{billboard_space}  _______   ")
+            print(f"{billboard_space} |/      |  ")
+            print(f"{billboard_space} |      (_) ")
+            print(f"{billboard_space} |      \\|/")
+            print(f"{billboard_space} |       |  ")
+            print(f"{billboard_space} |      / \\")
+            print(f"{billboard_space} |          ")
+            print(f"{billboard_space}_|___       ")
+
+        time.sleep(0.005)
 
     time.sleep(1.5)
