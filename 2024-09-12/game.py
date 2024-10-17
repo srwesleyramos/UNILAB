@@ -650,9 +650,9 @@ while game_deaths != game_players and game_winner == -1:
 
         # Elapsed time
 
-        round_time += 50
+        round_time += 10
 
-        time.sleep(0.05)
+        time.sleep(0.01)
 
     # Damage
 
