@@ -933,3 +933,20 @@ while game_deaths != game_players and game_winner == -1:
         time.sleep(0.005)
 
     time.sleep(1.5)
+
+if game_deaths == game_players and game_players != 1:
+    print()
+    print("          _____ __  __ ____   _  _____ _____ ")
+    print("         | ____|  \\/  |  _ \\ / \\|_   _| ____|")
+    print("         |  _| | |\\/| | |_) / _ \\ | | |  _|  ")
+    print("         | |___| |  | |  __/ ___ \\| | | |___ ")
+    print("         |_____|_|  |_|_| /_/   \\_\\_| |_____|")
+    print()
+    print(f"              _______            _______   ")
+    print(f"             |/      |          |/      |  ")
+    print(f"             |      (_)         |      (_) ")
+    print(f"             |      \\|/         |      \\|/")
+    print(f"             |       |          |       |  ")
+    print(f"             |      / \\         |      / \\")
+    print(f"             |                  |          ")
+    print(f"             |___               |___       ")
